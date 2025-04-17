@@ -1,5 +1,6 @@
 package bts.LabLune.controlador;
 
+import bts.LabLune.config.SpringFXMLLoader;
 import bts.LabLune.modelo.Pacient;
 import bts.LabLune.servicio.PacientServicio;
 
@@ -13,12 +14,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.net.URL;
-import java.time.LocalDate;
+
 import java.util.ResourceBundle;
 import javafx.scene.control.*;
 
 
 @Component
+
 public class IndexControlador implements Initializable {
     //Metodo para inizializar correctamente
 
@@ -41,22 +43,15 @@ public class IndexControlador implements Initializable {
 
 
     @FXML
-    private TableColumn<Pacient, Integer> idPacient;
+    private TableColumn<Pacient, Integer> idPatient;
 
     @FXML
-    private TableColumn<Pacient, String> namePacient;
+    private TableColumn<Pacient, String> namePatient;
 
     @FXML
-    private TableColumn<Pacient, String> lastnamePacient;
+    private TableColumn<Pacient, String> lastnamePatient;
 
-    @FXML
-    private TableColumn<Pacient,Integer> idResult;
 
-    @FXML
-    private TableColumn <Pacient, Integer> idDoctor;
-
-    @FXML
-    private TableColumn<Pacient, LocalDate> date;
 
     //Como se muestra lista se configura la tabla para poder recuperarla de la bd
     //Lista de tipo observable para que cualquier cambio se refleje en esta lista
@@ -71,19 +66,17 @@ public class IndexControlador implements Initializable {
     private TextField namePatientTextField;
     @FXML
     private TextField lastnamePatientTextField;
-    @FXML
-    private TextField resultPatientTextField;
-    @FXML
-    private TextField doctorTextField;
-    @FXML
-    private DatePicker datePicker;
+
+
     @FXML
     private Integer idPacientInterno;
 
 
 
-
+    @Autowired
+    private SpringFXMLLoader springFXMLLoader;
     @Override
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
     //Configurar tabla para que solo se pueda seleccionar un elemento
         pacientTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -93,12 +86,10 @@ public class IndexControlador implements Initializable {
 
     }
     private void configurarColumnas(){
-        idPacient.setCellValueFactory(new PropertyValueFactory<>("idPacient"));
-        namePacient.setCellValueFactory(new PropertyValueFactory<>("namePacient"));
-        lastnamePacient.setCellValueFactory(new PropertyValueFactory<>("lastnamePacient"));
-        idResult.setCellValueFactory(new PropertyValueFactory<>("idResult"));
-        idDoctor.setCellValueFactory(new PropertyValueFactory<>("idDoctor"));
-        date.setCellValueFactory(new PropertyValueFactory<>("date"));
+        idPatient.setCellValueFactory(new PropertyValueFactory<>("idPatient"));
+        namePatient.setCellValueFactory(new PropertyValueFactory<>("namePatient"));
+        lastnamePatient.setCellValueFactory(new PropertyValueFactory<>("lastnamePatient"));
+
 
     }
     private void listarPacientes(){
@@ -112,10 +103,8 @@ public class IndexControlador implements Initializable {
 
     }
     public void agregarPaciente(){ if (namePatientTextField.getText().isEmpty() ||
-            lastnamePatientTextField.getText().isEmpty() ||
-            resultPatientTextField.getText().isEmpty() ||
-            doctorTextField.getText().isEmpty() ||
-            datePicker.getValue() == null)  {
+            lastnamePatientTextField.getText().isEmpty()
+         )  {
 
         mostrarMensaje("Error", "You must provide all the data details.");
         namePatientTextField.requestFocus();
@@ -124,7 +113,7 @@ public class IndexControlador implements Initializable {
         else {
             var pacient = new Pacient();
             recolectarDatosFormulario(pacient);
-            pacient.setIdPacient(null);
+            pacient.setIdPatient(null);
             //agragamos utilizando servicio de spring
             pacientServicio.guardarPaciente(pacient);
             mostrarMensaje("Informacion", "Paciente agregado");
@@ -139,25 +128,21 @@ public class IndexControlador implements Initializable {
         var pacient = pacientTable.getSelectionModel().getSelectedItem();
         if(pacient != null) {
             //crear un atributo idpaciente en fxml idinterno
-            idPacientInterno = pacient.getIdPacient();
-            namePatientTextField.setText(pacient.getNamePacient());
-            lastnamePatientTextField.setText(pacient.getLastnamePacient());
-            resultPatientTextField.setText(String.valueOf(pacient.getIdResult()));
-            doctorTextField.setText(String.valueOf(pacient.getIdDoctor()));
-            datePicker.setValue(pacient.getDate());
+            idPacientInterno = pacient.getIdPatient();
+            namePatientTextField.setText(pacient.getNamePatient());
+            lastnamePatientTextField.setText(pacient.getLastnamePatient());
+
         }
     }
 
 
     private void recolectarDatosFormulario (Pacient pacient) {
         if (idPacientInterno!= null) {
-            pacient.setIdPacient(idPacientInterno);
+            pacient.setIdPatient(idPacientInterno);
         }
-    pacient.setNamePacient(namePatientTextField.getText());
-    pacient.setLastnamePacient(lastnamePatientTextField.getText());
-    pacient.setIdResult(Integer.parseInt(resultPatientTextField.getText()));
-    pacient.setIdDoctor(Integer.parseInt(doctorTextField.getText()));
-    pacient.setDate(datePicker.getValue());
+    pacient.setNamePatient(namePatientTextField.getText());
+    pacient.setLastnamePatient(lastnamePatientTextField.getText());
+
     }
     public void modificarPaciente(){
 
@@ -166,10 +151,8 @@ public class IndexControlador implements Initializable {
          return;
 
         }
-        if (namePatientTextField.getText().isEmpty() || lastnamePatientTextField.getText().isEmpty() ||
-                resultPatientTextField.getText().isEmpty() ||
-                doctorTextField.getText().isEmpty() ||
-                datePicker.getValue() == null) {
+        if (namePatientTextField.getText() == null || namePatientTextField.getText().isEmpty())
+               {
             mostrarMensaje("Error", "You must provide data" );
             namePatientTextField.requestFocus();
             return;
@@ -182,9 +165,9 @@ public class IndexControlador implements Initializable {
     public void eliminarPacient(){
         var pacient = pacientTable.getSelectionModel().getSelectedItem();
         if (pacient!=null){
-            logger.info("Regirsto a eliminar" + pacient.toString());
+            logger.info("Regirsto a eliminar{}", pacient.toString());
             pacientServicio.eliminarPaciente(pacient);
-            mostrarMensaje("Information", "Patient delete" +pacient.getIdPacient());
+            mostrarMensaje("Information", "Patient delete" +pacient.getIdPatient());
             limpiarFormulario();
             listarPacientes();
 
@@ -196,9 +179,7 @@ public class IndexControlador implements Initializable {
         idPacientInterno=null;
         namePatientTextField.clear();
         lastnamePatientTextField.clear();
-        resultPatientTextField.clear();
-        doctorTextField.clear();
-        datePicker.setValue(null); ;
+
 
     }
     private void mostrarMensaje(String titulo, String mensaje){
