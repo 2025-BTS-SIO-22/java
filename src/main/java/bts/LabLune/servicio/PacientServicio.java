@@ -1,6 +1,6 @@
 package bts.LabLune.servicio;
 
-import bts.LabLune.modelo.Pacient;
+import bts.LabLune.modelo.Patient;
 import bts.LabLune.repositorio.PacienteRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,22 +15,22 @@ public class PacientServicio implements IPacientServicio {
     private PacienteRepositorio pacienteRepositorio;
 
     @Override
-    public List<Pacient> listarPacientes() {
+    public List<Patient> listarPacientes() {
         return pacienteRepositorio.findAll();
     }
 
     @Override
-    public Pacient buscarPacientePorId(Integer idResult) {
+    public Patient buscarPacientePorId(Integer idResult) {
         return pacienteRepositorio.findById(idResult).orElse(null);
     }
 
     @Override
-    public void guardarPaciente(Pacient pacient) {
-            pacienteRepositorio.save(pacient);
+    public void guardarPaciente(Patient patient) {
+            pacienteRepositorio.save(patient);
     }
 
     @Override
-    public void eliminarPaciente(Pacient pacient) {
-              pacienteRepositorio.delete(pacient);
+    public void eliminarPaciente(Patient patient) {
+              pacienteRepositorio.delete(patient);
     }
 }

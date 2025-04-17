@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor //genera de manera automatica constructor con todos los elementos
 @ToString //genera el metodo ToString
 
-public class Pacient {
+public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer idPatient;
@@ -25,8 +26,8 @@ public class Pacient {
     public String lastnamePatient;
     public LocalDate birthdayPatient;
 
-    @OneToMany(mappedBy = "patient")
-    public List<Resultat> resultats;
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+    public List<Resultat> resultats = new ArrayList<>();
 
 
 }

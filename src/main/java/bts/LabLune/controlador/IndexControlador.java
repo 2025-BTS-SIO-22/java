@@ -1,7 +1,7 @@
 package bts.LabLune.controlador;
 
 import bts.LabLune.config.SpringFXMLLoader;
-import bts.LabLune.modelo.Pacient;
+import bts.LabLune.modelo.Patient;
 import bts.LabLune.servicio.PacientServicio;
 
 import javafx.collections.FXCollections;
@@ -37,25 +37,25 @@ public class IndexControlador implements Initializable {
     private PacientServicio pacientServicio;
 
     @FXML
-    private TableView<Pacient> pacientTable;
+    private TableView<Patient> patientTable;
 
     //Al ser atributo privado agregamos que es componente de nuestra vista
 
 
     @FXML
-    private TableColumn<Pacient, Integer> idPatient;
+    private TableColumn<Patient, Integer> idPatient;
 
     @FXML
-    private TableColumn<Pacient, String> namePatient;
+    private TableColumn<Patient, String> namePatient;
 
     @FXML
-    private TableColumn<Pacient, String> lastnamePatient;
+    private TableColumn<Patient, String> lastnamePatient;
 
 
 
     //Como se muestra lista se configura la tabla para poder recuperarla de la bd
     //Lista de tipo observable para que cualquier cambio se refleje en esta lista
-    private final ObservableList<Pacient> pacientList =
+    private final ObservableList<Patient> patientList =
             FXCollections.observableArrayList();
 
     //Mapeo componentes, text area que agregamos
@@ -71,15 +71,13 @@ public class IndexControlador implements Initializable {
     @FXML
     private Integer idPacientInterno;
 
-
-
     @Autowired
     private SpringFXMLLoader springFXMLLoader;
     @Override
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
     //Configurar tabla para que solo se pueda seleccionar un elemento
-        pacientTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        patientTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         configurarColumnas();
         listarPacientes();
     //Configurar columnas de la tabla para info de la base de datos
@@ -95,37 +93,34 @@ public class IndexControlador implements Initializable {
     private void listarPacientes(){
         logger.info("Ejecutando listado de pacientes");
         //Limpiar lista de pacientes
-        pacientList.clear();
+        patientList.clear();
         //Agregar todos los elementos que hay en bd
-        pacientList.addAll(pacientServicio.listarPacientes());
-        //Relacionar la tabla con la lista
-        pacientTable.setItems(pacientList);
-
+        patientList.addAll(pacientServicio.listarPacientes());
+        //Relaconar la tabla con la lista
+        patientTable.setItems(patientList);
     }
-    public void agregarPaciente(){ if (namePatientTextField.getText().isEmpty() ||
+    public void agregarPaciente() {
+        if (namePatientTextField.getText().isEmpty() ||
             lastnamePatientTextField.getText().isEmpty()
-         )  {
-
-        mostrarMensaje("Error", "You must provide all the data details.");
-        namePatientTextField.requestFocus();
-        return;
-    }
-        else {
-            var pacient = new Pacient();
+        ) {
+            mostrarMensaje("Error", "You must provide all the data details.");
+            namePatientTextField.requestFocus();
+            return;
+        } else {
+            var pacient = new Patient();
             recolectarDatosFormulario(pacient);
-            pacient.setIdPatient(null);
+
             //agragamos utilizando servicio de spring
             pacientServicio.guardarPaciente(pacient);
             mostrarMensaje("Informacion", "Paciente agregado");
             limpiarFormulario();
             listarPacientes();
 
-
         }
     }
     public void cargarPacienteFormulario(){
         //Seleccionamos "SINGLE" para seleccionar un registro a la vez
-        var pacient = pacientTable.getSelectionModel().getSelectedItem();
+        var pacient = patientTable.getSelectionModel().getSelectedItem();
         if(pacient != null) {
             //crear un atributo idpaciente en fxml idinterno
             idPacientInterno = pacient.getIdPatient();
@@ -136,12 +131,10 @@ public class IndexControlador implements Initializable {
     }
 
 
-    private void recolectarDatosFormulario (Pacient pacient) {
-        if (idPacientInterno!= null) {
-            pacient.setIdPatient(idPacientInterno);
-        }
-    pacient.setNamePatient(namePatientTextField.getText());
-    pacient.setLastnamePatient(lastnamePatientTextField.getText());
+    private void recolectarDatosFormulario (Patient patient) {
+
+    patient.setNamePatient(namePatientTextField.getText());
+    patient.setLastnamePatient(lastnamePatientTextField.getText());
 
     }
     public void modificarPaciente(){
@@ -157,17 +150,18 @@ public class IndexControlador implements Initializable {
             namePatientTextField.requestFocus();
             return;
         }
-        var pacient = new Pacient();
-        recolectarDatosFormulario(pacient);
-        pacientServicio.guardarPaciente(pacient);
+        var patient = patientTable.getSelectionModel().getSelectedItem();
+        recolectarDatosFormulario(patient);
+        pacientServicio.guardarPaciente(patient);
         mostrarMensaje("Information", "Data modify");
+        listarPacientes();
     }
     public void eliminarPacient(){
-        var pacient = pacientTable.getSelectionModel().getSelectedItem();
-        if (pacient!=null){
-            logger.info("Regirsto a eliminar{}", pacient.toString());
-            pacientServicio.eliminarPaciente(pacient);
-            mostrarMensaje("Information", "Patient delete" +pacient.getIdPatient());
+        var patient = patientTable.getSelectionModel().getSelectedItem();
+        if (patient!=null){
+            logger.info("Regirsto a eliminar{}", patient.toString());
+            pacientServicio.eliminarPaciente(patient);
+            mostrarMensaje("Information", "Patient delete" +patient.getIdPatient());
             limpiarFormulario();
             listarPacientes();
 

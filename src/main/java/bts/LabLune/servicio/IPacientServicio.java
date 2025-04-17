@@ -1,20 +1,20 @@
 package bts.LabLune.servicio;
 
-import bts.LabLune.modelo.Pacient;
+import bts.LabLune.modelo.Patient;
 
 import java.util.List;
 
 
 public interface IPacientServicio {
 
-    public List<Pacient> listarPacientes();
+    public List<Patient> listarPacientes();
 
-    public Pacient buscarPacientePorId(Integer idPacient);
+    public Patient buscarPacientePorId(Integer idPacient);
 
-    public void guardarPaciente(Pacient idPacient); //id de resultado nulo se hace una insercion, registro a agregar
+    public void guardarPaciente(Patient idPatient); //id de resultado nulo se hace una insercion, registro a agregar
                                                 //id diferente a nulo es actualizar
 
-    public void eliminarPaciente(Pacient idPacient);
+    public void eliminarPaciente(Patient idPatient);
 
 
 }

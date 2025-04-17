@@ -12,7 +12,7 @@ public class Resultat {
 
         @ManyToOne
         @JoinColumn(name = "idPatient")
-        private Pacient patient;
+        private Patient patient;
 
         @ManyToMany
         @JoinTable(
@@ -34,11 +34,11 @@ public class Resultat {
                 this.idResultat = idResultat;
         }
 
-        public Pacient getPatient() {
+        public Patient getPatient() {
                 return patient;
         }
 
-        public void setPatient(Pacient patient) {
+        public void setPatient(Patient patient) {
                 this.patient = patient;
         }
 

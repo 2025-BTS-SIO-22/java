@@ -21,7 +21,7 @@ public class User {
 
     @OneToOne
     @JoinColumn(name = "idPatient")
-    private Pacient patient;
+    private Patient patient;
 
     @OneToOne
     @JoinColumn(name = "idDoctor")

@@ -15,7 +15,7 @@
             <Font name="Arial Black" size="19.0" />
          </font>
       </Label>
-      <TableView fx:id="pacientTable" layoutX="201.0" layoutY="82.0" onMouseClicked="#cargarPacienteFormulario" prefHeight="215.0" prefWidth="446.0">
+      <TableView fx:id="patientTable" layoutX="201.0" layoutY="82.0" onMouseClicked="#cargarPacienteFormulario" prefHeight="215.0" prefWidth="446.0">
         <columns>
           <TableColumn fx:id="idPatient" prefWidth="75.0" text="IdPatient" />
           <TableColumn fx:id="namePatient" prefWidth="75.0" text="Name" />
