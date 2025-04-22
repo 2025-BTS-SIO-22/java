@@ -23,9 +23,11 @@ public class DoctorServicio  implements IDoctorServicio{
     private DoctorRepositorio doctorRepositorio;
 
     @Override
+
     public List<Doctor> listarDoctores() {
-        return List.of();
+        return doctorRepositorio.findAll();  // Esto debería devolver todos los doctores desde la base de datos
     }
+    
 
     @Override
     public Doctor buscarDoctoresporId(Integer idDoctor) {

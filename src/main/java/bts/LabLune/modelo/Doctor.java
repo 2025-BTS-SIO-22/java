@@ -18,13 +18,13 @@ import java.util.List;
         public class Doctor {
                 @Id
                 @GeneratedValue(strategy = GenerationType.IDENTITY)
-                private Integer idDoctor;
+                public Integer idDoctor;
 
-                private String nameDoctor;
-                private String lastnameDoctor;
+                public String nameDoctor;
+                public String lastnameDoctor;
 
                 @ManyToMany(mappedBy = "doctors")
-                private List<Resultat> resultats;
+                public List<Resultat> resultats;
         }
 
 

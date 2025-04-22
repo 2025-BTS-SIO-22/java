@@ -91,11 +91,11 @@ public class DoctorControlador implements Initializable {
     }
     private void listarDoctores(){
         logger.info("Ejecutando listado de doctores");
-        //Limpiar lista de doctores
+        // Limpiar la lista antes de llenarla
         doctorList.clear();
-        //Agregar todos los elementos que hay en bd
+        // Agregar todos los doctores de la base de datos
         doctorList.addAll(doctorServicio.listarDoctores());
-        //Relaconar la tabla con la lista
+        // Relacionar la tabla con la lista
         doctorTable.setItems(doctorList);
     }
     public void agregarDoctor() {
