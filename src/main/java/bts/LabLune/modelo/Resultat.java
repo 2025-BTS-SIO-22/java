@@ -1,6 +1,8 @@
 package bts.LabLune.modelo;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +22,7 @@ public class Resultat {
                 joinColumns = @JoinColumn(name = "idResultat"),
                 inverseJoinColumns = @JoinColumn(name = "idDoctor")
         )
-        private List<Doctor> doctors;
+        private List<Doctor> doctors = new ArrayList<>();;
 
         // Puedes agregar más campos si hay contenido del resultado, fecha, etc.
 

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity //se va a comunicar con la bd
@@ -24,7 +25,7 @@ import java.util.List;
                 public String lastnameDoctor;
 
                 @ManyToMany(mappedBy = "doctors")
-                public List<Resultat> resultats;
+                public List<Resultat> resultats = new ArrayList<>();;
         }
 
 

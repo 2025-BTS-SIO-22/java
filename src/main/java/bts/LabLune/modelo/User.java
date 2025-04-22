@@ -13,25 +13,21 @@ import lombok.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUser;
+    public Integer idUser;
 
-    private String username;
-    private String password;
-    private boolean admin;
+    public String username;
+    public String password;
+    public boolean admin;
 
     @OneToOne
     @JoinColumn(name = "idPatient")
-    private Patient patient;
+    public Patient patient;
 
     @OneToOne
     @JoinColumn(name = "idDoctor")
-    private Doctor doctor;
+    public Doctor doctor;
 
     public boolean isAdmin(){
-
-            return this.admin;
-
-
-
+        return this.admin;
     }
 }
