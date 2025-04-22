@@ -1,5 +1,6 @@
 package bts.LabLune.controlador;
-
+import bts.LabLune.modelo.UserDTO;
+import bts.LabLune.session.UserSession;
 import bts.LabLune.servicio.AutentificacionServicio;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,13 +38,12 @@ public class UserControlador {
         String username = userNameLogin.getText();
         String password = passwordLogin.getText();
 
+        UserDTO userDTO = autentificacionServicio.autenticarUsuario(username, password);
 
-
-        boolean esAutenticado = autentificacionServicio.autenticarUsuario(username, password);
-
-        if (esAutenticado) {
+        if (userDTO != null) {
+            UserSession.startSession(userDTO);  // 👉 Guarda la sesión
             mensajeLabel.setText("Login exitoso!");
-            // Aquí podrías redirigir a otra vista, como la de Home o Dashboard.
+
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/templates/home.fxml"));
                 Parent root = loader.load();
@@ -57,8 +57,8 @@ public class UserControlador {
                 e.printStackTrace();
                 mensajeLabel.setText("Error al cargar la vista de inicio.");
             }
+
         } else {
             mensajeLabel.setText("Error al autenticar usuario.");
         }
-    }
-}
+    }}

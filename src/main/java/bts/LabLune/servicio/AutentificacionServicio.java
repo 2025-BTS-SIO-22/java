@@ -1,6 +1,7 @@
 package bts.LabLune.servicio;
 
 import bts.LabLune.modelo.User;
+import bts.LabLune.modelo.UserDTO;
 import bts.LabLune.repositorio.UserRepositorio;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,16 @@ public class AutentificacionServicio {
         actualizarContraseñas();
     }
 
-    public boolean autenticarUsuario(String username, String password) {
-        Optional<User> user = userRepositorio.findByUsername(username);
-        return user.isPresent() && passwordEncoder.matches(password, user.get().getPassword());
+    public UserDTO autenticarUsuario(String username, String password) {
+        Optional<User> optionalUser = userRepositorio.findByUsername(username);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            if (passwordEncoder.matches(password, user.getPassword())) {
+                return new UserDTO(user.getIdUser().longValue(), user.getUsername(), user.isAdmin());
+            }
+        }
+        return null;
     }
 
     public void registrarUsuario(User user) {

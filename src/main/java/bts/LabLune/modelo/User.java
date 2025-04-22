@@ -26,4 +26,12 @@ public class User {
     @OneToOne
     @JoinColumn(name = "idDoctor")
     private Doctor doctor;
+
+    public boolean isAdmin(){
+
+            return this.admin;
+
+
+
+    }
 }

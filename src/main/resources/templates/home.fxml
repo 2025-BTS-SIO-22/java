@@ -9,7 +9,7 @@
    <children>
       <AnchorPane layoutX="102.0" layoutY="61.0" prefHeight="273.0" prefWidth="427.0" style="-fx-background-color: dddd;">
          <children>
-            <Button layoutX="38.0" layoutY="112.0" mnemonicParsing="false" onAction="#handlePatientsButton" style="-fx-background-color: black;" text="Patients" textFill="#f2eded" />
+            <Button fx:id="patientsButton" layoutX="38.0" layoutY="112.0" mnemonicParsing="false" onAction="#handlePatientsButton" style="-fx-background-color: black;" text="Patients" textFill="#f2eded" />
             <Button layoutX="174.0" layoutY="112.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Doctors" textFill="#f2eded" />
             <Button layoutX="314.0" layoutY="112.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Results" textFill="#f2eded" />
          </children>

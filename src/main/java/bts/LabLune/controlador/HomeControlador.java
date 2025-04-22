@@ -2,6 +2,8 @@ package bts.LabLune.controlador;
 
 
 import bts.LabLune.config.SpringFXMLLoader;
+import bts.LabLune.modelo.UserDTO;
+import bts.LabLune.session.UserSession;
 import javafx.fxml.FXML;
 
 import javafx.scene.Parent;
@@ -51,13 +53,12 @@ public class HomeControlador {
 
 
     public void irAPatients(ActionEvent event) {
-
-
         try {
-            Parent root = SpringFXMLLoader.load("templates/index.fxml");  // Cargar la vista de index
+            // Si es admin, cargamos la vista de pacientes
+            Parent root = SpringFXMLLoader.load("templates/index.fxml");  // Cargar la vista de pacientes
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Ventana Index");
+            stage.setTitle("Pacientes");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();  // o muestra una alerta si prefieres
@@ -66,14 +67,27 @@ public class HomeControlador {
 
     public void iraDoctors(ActionEvent event) {
         try {
-            Parent root = SpringFXMLLoader.load("templates/doctorindex.fxml");  // Cargar la vista de index
+            // Si es admin, cargamos la vista de doctores
+            Parent root = SpringFXMLLoader.load("templates/doctor.fxml");  // Cargar la vista de doctores
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Ventana Index");
+            stage.setTitle("Doctores");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();  // o muestra una alerta si prefieres
-            //
+        }
+    }
+    @FXML
+    public void initialize() {
+        // Obtener el usuario actual de la sesión
+        UserDTO user = UserSession.getUserSession();
+
+        if (user != null) {
+            if (!user.isAdmin()) {
+                // Si NO es admin, ocultamos los botones de Pacientes y Doctores
+                doctorsButton.setVisible(false);  // Ocultar botón de Doctores si no es admin
+                patientsButton.setVisible(false); // Ocultar botón de Pacientes si no es admin
+            }
         }
     }
 }
