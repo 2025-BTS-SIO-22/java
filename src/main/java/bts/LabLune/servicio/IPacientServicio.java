@@ -9,7 +9,8 @@ public interface IPacientServicio {
 
     public List<Patient> listarPacientes();
 
-    public Patient buscarPacientePorId(Integer idPacient);
+
+    Patient buscarPacientePorId(Integer idResult);
 
     public void guardarPaciente(Patient idPatient); //id de resultado nulo se hace una insercion, registro a agregar
                                                 //id diferente a nulo es actualizar

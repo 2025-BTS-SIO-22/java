@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +22,8 @@ import java.io.IOException;
 @Component
 
 public class HomeControlador {
-
+    @Autowired
+    private SpringFXMLLoader springFXMLLoader;
     // Definir los botones de la vista
     @FXML
     private Button patientsButton;
@@ -40,8 +43,9 @@ public class HomeControlador {
     // Método que se ejecuta cuando se hace clic en el botón "Doctors"
     @FXML
     private void handleDoctorsButton(ActionEvent event) {
-        System.out.println("Doctors button clicked");
-        // Aquí puedes agregar lógica para navegar a la vista de "Doctors"
+
+            iraDoctors(event);
+
     }
 
     // Método que se ejecuta cuando se hace clic en el botón "Results"
@@ -67,14 +71,14 @@ public class HomeControlador {
 
     public void iraDoctors(ActionEvent event) {
         try {
-            // Si es admin, cargamos la vista de doctores
-            Parent root = SpringFXMLLoader.load("templates/doctor.fxml");  // Cargar la vista de doctores
+            // Usar la instancia inyectada de SpringFXMLLoader
+            Parent root = SpringFXMLLoader.load("templates/doctor.fxml");
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Doctores");
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();  // o muestra una alerta si prefieres
+            e.printStackTrace();
         }
     }
     @FXML
