@@ -25,7 +25,7 @@ import java.util.List;
                 public String lastnameDoctor;
 
                 @ManyToMany(mappedBy = "doctors")
-                public List<Resultat> resultats = new ArrayList<>();;
+                public List<Resultat> resultats = new ArrayList<>();
         }
 
 

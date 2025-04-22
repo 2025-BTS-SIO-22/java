@@ -22,7 +22,7 @@ public class Resultat {
                 joinColumns = @JoinColumn(name = "idResultat"),
                 inverseJoinColumns = @JoinColumn(name = "idDoctor")
         )
-        private List<Doctor> doctors = new ArrayList<>();;
+        private List<Doctor> doctors = new ArrayList<>();
 
         // Puedes agregar más campos si hay contenido del resultado, fecha, etc.
 
