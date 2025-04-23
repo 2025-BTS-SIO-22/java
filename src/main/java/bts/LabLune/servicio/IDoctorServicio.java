@@ -1,8 +1,6 @@
 package bts.LabLune.servicio;
 
 import bts.LabLune.modelo.Doctor;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 
 import java.util.List;
 
