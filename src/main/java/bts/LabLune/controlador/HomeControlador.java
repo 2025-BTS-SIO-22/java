@@ -51,7 +51,7 @@ public class HomeControlador {
     // Método que se ejecuta cuando se hace clic en el botón "Results"
     @FXML
     private void handleResultsButton(ActionEvent event) {
-        System.out.println("Results button clicked");
+        iraResults(event);
         // Aquí puedes agregar lógica para navegar a la vista de "Results"
     }
 
@@ -81,6 +81,19 @@ public class HomeControlador {
             e.printStackTrace();
         }
     }
+
+    public void iraResults(ActionEvent event) {
+        try {
+            // Usar la instancia inyectada de SpringFXMLLoader
+            Parent root = SpringFXMLLoader.load("templates/resultat.fxml");
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Resultados");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     public void initialize() {
         // Obtener el usuario actual de la sesión
@@ -90,7 +103,8 @@ public class HomeControlador {
             if (!user.isAdmin()) {
                 // Si NO es admin, ocultamos los botones de Pacientes y Doctores
                 doctorsButton.setVisible(false);  // Ocultar botón de Doctores si no es admin
-                patientsButton.setVisible(false); // Ocultar botón de Pacientes si no es admin
+                patientsButton.setVisible(false);
+                resultsButton.setVisible(false); // Ocultar botón de Pacientes si no es admin
             }
         }
     }

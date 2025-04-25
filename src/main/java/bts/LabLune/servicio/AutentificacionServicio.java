@@ -23,7 +23,7 @@ public class AutentificacionServicio {
 
     @PostConstruct
     public void init() {
-        actualizarContraseñas();
+
     }
 
     public UserDTO autenticarUsuario(String username, String password) {
@@ -54,17 +54,5 @@ public class AutentificacionServicio {
         }
     }
 
-    // Método para actualizar todas las contraseñas si no están cifradas
-    public void actualizarContraseñas() {
-        List<User> usuarios = userRepositorio.findAll();
 
-        for (User user : usuarios) {
-            String contrasenaActual = user.getPassword();
-            if (!contrasenaActual.startsWith("$2a$") && !contrasenaActual.startsWith("$2b$")) {
-                String contrasenaCifrada = passwordEncoder.encode(contrasenaActual);
-                user.setPassword(contrasenaCifrada);
-                userRepositorio.save(user);
-            }
-        }
-    }
 }

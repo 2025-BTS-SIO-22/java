@@ -24,7 +24,7 @@ public class Resultat {
         )
         private List<Doctor> doctors = new ArrayList<>();
 
-        // Puedes agregar más campos si hay contenido del resultado, fecha, etc.
+        private String descripcion; // Agregamos la descripción para los resultados
 
         // Getters y Setters
 
@@ -50,5 +50,13 @@ public class Resultat {
 
         public void setDoctors(List<Doctor> doctors) {
                 this.doctors = doctors;
+        }
+
+        public String getDescripcion() {
+                return descripcion;
+        }
+
+        public void setDescripcion(String descripcion) {
+                this.descripcion = descripcion;
         }
 }
