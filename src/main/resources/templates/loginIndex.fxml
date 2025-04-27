@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bts.LabLune.controlador.UserControlador">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bts.lab_lune.controller.UserController">
    <children>
       <AnchorPane layoutX="201.0" layoutY="79.0" prefHeight="229.0" prefWidth="222.0" style="-fx-background-color: #82E0AA;" />
       <AnchorPane layoutX="211.0" layoutY="86.0" prefHeight="215.0" prefWidth="203.0" style="-fx-background-color: #EAEDED;">
@@ -31,7 +31,7 @@
             <TextField fx:id="userNameLogin" layoutX="14.0" layoutY="36.0" prefHeight="25.0" prefWidth="169.0" />
 
             <!-- Label para mostrar mensajes como "Usuario o contraseña incorrectos" -->
-            <Label fx:id="mensajeLabel" layoutX="20.0" layoutY="145.0" textFill="red" />
+            <Label fx:id="messageLabel" layoutX="20.0" layoutY="145.0" textFill="red" />
          </children>
       </AnchorPane>
       <TextField layoutX="201.0" layoutY="39.0" prefHeight="40.0" prefWidth="222.0" text="Laboratoires Lune ">

@@ -8,22 +8,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bts.LabLune.controlador.DoctorControlador">
+<AnchorPane prefHeight="400.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bts.lab_lune.controller.DoctorController">
    <children>
       <Label layoutX="330.0" layoutY="54.0" prefHeight="28.0" prefWidth="194.0" text="Laboratoire Lune " textAlignment="JUSTIFY" textFill="#a177a1">
          <font>
             <Font name="Arial Black" size="19.0" />
          </font>
       </Label>
-      <TableView fx:id="doctorTable" layoutX="201.0" layoutY="82.0" onMouseClicked="#cargarDoctoresFormulario" prefHeight="215.0" prefWidth="446.0">
+      <TableView fx:id="doctorTable" layoutX="201.0" layoutY="82.0" onMouseClicked="#DoctorForm" prefHeight="215.0" prefWidth="446.0">
         <columns>
           <TableColumn fx:id="idDoctor" prefWidth="75.0" text="IdDoctor" />
           <TableColumn fx:id="nameDoctor" prefWidth="75.0" text="Name" />
-            <TableColumn fx:id="lastnameDoctor" prefWidth="75.0" text="Lastname" />
-
+          <TableColumn fx:id="lastnameDoctor" prefWidth="75.0" text="Lastname" />
         </columns>
       </TableView>
-      <AnchorPane layoutY="81.0" onMouseClicked="#cargarDoctoresFormulario" prefHeight="215.0" prefWidth="200.0">
+      <AnchorPane layoutY="81.0" onMouseClicked="#DoctorForm" prefHeight="215.0" prefWidth="200.0">
          <children>
             <Label layoutX="2.0" layoutY="5.0" prefHeight="18.0" prefWidth="95.0" text="Name Doctor" textFill="#15a5c1">
                <font>
@@ -37,15 +36,14 @@
             </Label>
             <TextField fx:id="nameDoctorTextField" layoutX="1.0" layoutY="23.0" />
             <TextField fx:id="lastnameDoctorTextField" layoutX="2.0" layoutY="64.0" />
-
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-3.0" layoutY="296.0" prefHeight="74.0" prefWidth="651.0" style="-fx-background-color: #f1faee;">
          <children>
-            <Button fx:id="addButon" layoutX="25.0" layoutY="23.0" mnemonicParsing="false" onAction="#agregarDoctor" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Add" textFill="#f1faee" />
-            <Button fx:id="modifyButton" layoutX="175.0" layoutY="24.0" mnemonicParsing="false" onAction="#modificarDoctor" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Modify" textFill="#f1faee" />
-            <Button fx:id="deleteButton" layoutX="336.0" layoutY="24.0" mnemonicParsing="false" onAction="#eliminarDoctor" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Delete" textFill="#f1faee" />
-            <Button fx:id="clearTableButton" layoutX="496.0" layoutY="23.0" mnemonicParsing="false" onAction="#limpiarFormulario" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Clear Table" textFill="#f1faee" />
+            <Button fx:id="addButton" layoutX="25.0" layoutY="23.0" mnemonicParsing="false" onAction="#addDoctor" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Add" textFill="#f1faee" />
+            <Button fx:id="updateButton" layoutX="175.0" layoutY="24.0" mnemonicParsing="false" onAction="#updateDoctor" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Modify" textFill="#f1faee" />
+            <Button fx:id="removeButton" layoutX="336.0" layoutY="24.0" mnemonicParsing="false" onAction="#removeDoctor" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Delete" textFill="#f1faee" />
+            <Button fx:id="clearForm" layoutX="496.0" layoutY="23.0" mnemonicParsing="false" onAction="#clearForm" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Clear Table" textFill="#f1faee" />
          </children>
       </AnchorPane>
    </children>

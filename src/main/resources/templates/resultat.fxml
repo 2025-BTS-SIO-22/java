@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bts.LabLune.controlador.ResultatControlador">
+<AnchorPane prefHeight="400.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bts.lab_lune.controller.ResultController">
    <children>
       <Label layoutX="330.0" layoutY="54.0" prefHeight="28.0" prefWidth="194.0" text="Laboratoire Lune " textAlignment="JUSTIFY" textFill="#a177a1">
          <font>
@@ -18,12 +18,11 @@
          </font>
       </Label>
       <TableView fx:id="resultatTable" layoutX="201.0" layoutY="82.0" onMouseClicked="#cargarResultadosFormulario" prefHeight="215.0" prefWidth="446.0">
-        <columns>
-          <TableColumn fx:id="namePacient" prefWidth="75.0" text="Name" />
-          <TableColumn fx:id="LastnamePacient" prefWidth="75.0" text="Lastname" />
-            <TableColumn fx:id="Resultat" prefWidth="75.0" text="Resultat" />
-
-        </columns>
+         <columns>
+            <TableColumn fx:id="namePatient" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="LastnamePatient" prefWidth="75.0" text="Lastname" />
+            <TableColumn fx:id="Result" prefWidth="75.0" text="Result" />
+         </columns>
       </TableView>
       <AnchorPane layoutY="81.0" onMouseClicked="#cargarResultadosFormulario" prefHeight="215.0" prefWidth="200.0">
          <children>
@@ -32,27 +31,26 @@
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Label>
-            <Label layoutY="90.0" text="Pacient" textFill="#15a3bc">
+            <Label layoutY="90.0" text="Patient" textFill="#15a3bc">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Label>
-            <TextArea fx:id="descriptionResultat" layoutX="3.0" layoutY="23.0" prefHeight="57.0" prefWidth="194.0" />
-            <SplitMenuButton fx:id="searchPacientBar" layoutX="3.0" layoutY="114.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="194.0">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
-              </items>
+            <TextArea fx:id="descriptionResult" layoutX="3.0" layoutY="23.0" prefHeight="57.0" prefWidth="194.0" />
+            <SplitMenuButton fx:id="searchPatientBar" layoutX="3.0" layoutY="114.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="194.0">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                  <MenuItem mnemonicParsing="false" text="Action 2" />
+               </items>
             </SplitMenuButton>
-            <Button fx:id="addButon" layoutX="5.0" layoutY="161.0" mnemonicParsing="false" onAction="#agregarResultado" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Add Resultat" textFill="#f1faee" />
-
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-3.0" layoutY="296.0" prefHeight="74.0" prefWidth="651.0" style="-fx-background-color: #f1faee;">
          <children>
-            <Button fx:id="modifyButton" layoutX="210.0" layoutY="23.0" mnemonicParsing="false" onAction="#modificarResultado" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Modify" textFill="#f1faee" />
-            <Button fx:id="deleteButton" layoutX="364.0" layoutY="24.0" mnemonicParsing="false" onAction="#eliminarResultado" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Delete" textFill="#f1faee" />
-            <Button fx:id="clearTableButton" layoutX="496.0" layoutY="23.0" mnemonicParsing="false" onAction="#limpiarFormulario" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Clear Table" textFill="#f1faee" />
+            <Button fx:id="addButton" layoutX="5.0" layoutY="161.0" mnemonicParsing="false" onAction="#addResult" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Add Result" textFill="#f1faee" />
+            <Button fx:id="updateButton" layoutX="210.0" layoutY="23.0" mnemonicParsing="false" onAction="#updateResult" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Modify" textFill="#f1faee" />
+            <Button fx:id="removeButton" layoutX="364.0" layoutY="24.0" mnemonicParsing="false" onAction="#removeResult" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Delete" textFill="#f1faee" />
+            <Button fx:id="clearForm" layoutX="496.0" layoutY="23.0" mnemonicParsing="false" onAction="#clearForm" prefHeight="26.0" prefWidth="108.0" style="-fx-background-color: #1d3557;" text="Clear Table" textFill="#f1faee" />
          </children>
       </AnchorPane>
    </children>
