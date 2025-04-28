@@ -69,12 +69,15 @@ public class HomeController {
         // Obtener el usuario actual de la sesión
         User user = UserSession.getUserSession();
 
-        if (user != null && !user.isAdmin()) {
-            // Si NO es admin, ocultamos los botones de Pacientes y Doctores
-            // Ocultar botón de Doctores si no es admin
-            doctorButton.setVisible(false);
-            // Ocultar botón de Pacientes si no es admin
-            patientButton.setVisible(false);
+        // Si NO es admin, ocultamos los botones de Pacientes y Doctores
+        // Ocultar botón de Doctores si no es admin
+        doctorButton.setVisible(false);
+        // Ocultar botón de Pacientes si no es admin
+        patientButton.setVisible(false);
+
+        if (user.isAdmin()) {
+            doctorButton.setVisible(true);
+            patientButton.setVisible(true);
         }
     }
 }

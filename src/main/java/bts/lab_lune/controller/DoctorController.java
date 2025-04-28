@@ -22,7 +22,7 @@ import javafx.scene.control.*;
 public class DoctorController implements Initializable {
     //Metodo para inizializar correctamente
     //Con el loger estamos indicando que es enviara informacion por consola
-    private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
+    private static final Logger logger = LoggerFactory.getLogger(DoctorController.class);
 
     //Integrar componente de service de spring
     //Con este atributo ya tenemos acceso al servciio de resultservice
