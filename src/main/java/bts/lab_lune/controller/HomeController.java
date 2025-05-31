@@ -48,7 +48,7 @@ public class HomeController {
 
     @FXML
     private void handleResult(ActionEvent event) throws IOException {
-        Parent root = SpringFXMLLoader.load("templates/resultat.fxml");
+        Parent root = SpringFXMLLoader.load("templates/result.fxml");
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("Result");
