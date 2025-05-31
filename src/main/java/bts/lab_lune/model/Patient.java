@@ -12,7 +12,6 @@ import java.util.List;
 //genera el metodo ToString
 @ToString
 //Conversion de caracteres
-@Table(name = "patients")
 @NotNull
 
 public class Patient {
