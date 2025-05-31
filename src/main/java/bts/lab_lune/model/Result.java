@@ -1,7 +1,6 @@
 package bts.lab_lune.model;
 
 import jakarta.persistence.*;
-import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,16 @@ public class Result {
     @ManyToOne
     @JoinColumn(name = "idPatient")
     private Patient patient;
+
+    @Transient
+    public String getNamePatient() {
+        return patient != null ? patient.getNamePatient() : "";
+    }
+
+    @Transient
+    public String getLastnamePatient() {
+        return patient != null ? patient.getLastnamePatient() : "";
+    }
 
     @ManyToMany
     @JoinTable(

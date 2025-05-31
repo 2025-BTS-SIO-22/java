@@ -1,8 +1,8 @@
 package bts.lab_lune.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.ToString;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,10 @@ import java.util.List;
 @Entity
 //genera el metodo ToString
 @ToString
+//Conversion de caracteres
+@Table(name = "patients")
+@NotNull
+
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -17,11 +17,11 @@
             <Font name="Arial Black" size="19.0" />
          </font>
       </Label>
-      <TableView fx:id="resultatTable" layoutX="201.0" layoutY="82.0" onMouseClicked="#cargarResultadosFormulario" prefHeight="215.0" prefWidth="446.0">
+      <TableView fx:id="resultTable" layoutX="204.0" layoutY="100.0" onMouseClicked="#cargarResultadosFormulario" prefHeight="215.0" prefWidth="446.0">
          <columns>
             <TableColumn fx:id="namePatient" prefWidth="75.0" text="Name" />
-            <TableColumn fx:id="LastnamePatient" prefWidth="75.0" text="Lastname" />
-            <TableColumn fx:id="Result" prefWidth="75.0" text="Result" />
+            <TableColumn fx:id="lastnamePatient" prefWidth="75.0" text="Lastname" />
+            <TableColumn fx:id="description" prefWidth="75.0" text="Description" />
          </columns>
       </TableView>
       <AnchorPane layoutY="81.0" onMouseClicked="#cargarResultadosFormulario" prefHeight="215.0" prefWidth="200.0">
@@ -36,8 +36,8 @@
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Label>
-            <TextArea fx:id="descriptionResult" layoutX="3.0" layoutY="23.0" prefHeight="57.0" prefWidth="194.0" />
-            <SplitMenuButton fx:id="searchPatientBar" layoutX="3.0" layoutY="114.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="194.0">
+            <TextArea fx:id="descriptionField" layoutX="3.0" layoutY="23.0" prefHeight="57.0" prefWidth="194.0" />
+            <SplitMenuButton fx:id="splitPacientes" layoutX="3.0" layoutY="114.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="194.0">
                <items>
                   <MenuItem mnemonicParsing="false" text="Action 1" />
                   <MenuItem mnemonicParsing="false" text="Action 2" />

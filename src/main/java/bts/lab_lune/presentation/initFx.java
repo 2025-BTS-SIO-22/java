@@ -13,22 +13,23 @@ public class initFx extends Application {
     private ConfigurableApplicationContext applicationContext;
 
     @Override
-    public void init() {
+    public void init() throws Exception {
+        // Crear el contexto Spring una única vez aquí
         this.applicationContext = new SpringApplicationBuilder(LabLuneApplication.class).run();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Mostrar primero la pantalla de login
         FXMLLoader loader = new FXMLLoader(LabLuneApplication.class.getResource("/templates/loginIndex.fxml"));
-        loader.setControllerFactory(applicationContext::getBean);
-        Scene loginScene = new Scene(loader.load());
-        stage.setScene(loginScene);
+        loader.setControllerFactory(applicationContext::getBean); // Inyectar beans con Spring
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
         stage.show();
     }
 
     @Override
-    public void stop() {
+    public void stop() throws Exception {
+        // Cerrar contexto Spring cuando se cierra JavaFX
         applicationContext.close();
         Platform.exit();
     }

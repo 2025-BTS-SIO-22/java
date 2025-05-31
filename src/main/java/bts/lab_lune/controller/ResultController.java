@@ -3,6 +3,8 @@ package bts.lab_lune.controller;
 import bts.lab_lune.model.Patient;
 import bts.lab_lune.model.Result;
 import bts.lab_lune.service.IPatientService;
+import bts.lab_lune.service.PatientService;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import bts.lab_lune.service.IResultService;
@@ -13,10 +15,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javafx.scene.input.MouseEvent;
 import java.net.URL;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.*;
+
+import javax.swing.*;
 
 @Component
 public class ResultController implements Initializable {
@@ -26,18 +33,23 @@ public class ResultController implements Initializable {
     private IResultService resultService;
 
     @Autowired
-    private IPatientService patientService;
+    private IPatientService iPatientService;
+
+    @Autowired
+    private PatientService patientService;
 
     @FXML
-    private ComboBox<Patient> patientField;
+    private SplitMenuButton splitPacientes;
+
 
     @FXML
     private TextArea descriptionField;
 
     @FXML
     private TableView<Result> resultTable;
+    private ObservableList<Result> resultList = FXCollections.observableArrayList();
 
-    private ObservableList<Result> resultList;
+
 
     @FXML
     private TableColumn<Result, String> description;
@@ -50,6 +62,7 @@ public class ResultController implements Initializable {
 
     @FXML
     private Integer idResultIntern;
+    private Patient pacienteSeleccionado;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,9 +70,79 @@ public class ResultController implements Initializable {
         resultTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         configureColumn();
         resultList();
+        cargarPacientesEnMenu();
         //Configurar columnas de la tabla para info de la base de datos
     }
 
+    @FXML
+    private void cargarResultadosFormulario(MouseEvent event) {
+        System.out.println("Tabla o AnchorPane clickeado");
+        Result result = resultTable.getSelectionModel().getSelectedItem();
+        if (result != null) {
+            idResultIntern = result.getIdResult();
+            descriptionField.setText(result.getDescription());
+            pacienteSeleccionado = result.getPatient(); // actualiza la variable interna
+
+            // actualiza el texto del SplitMenuButton para reflejar el paciente
+            splitPacientes.setText("Select patients"+
+                    result.getPatient().getNamePatient() + " " + result.getPatient().getLastnamePatient()
+            );
+        }
+    }
+
+    private void cargarPacientesEnMenu() {
+        splitPacientes.getItems().clear();
+        List<Patient> patients = patientService.listPatient();
+        for (Patient patient : patients) {
+            MenuItem item = new MenuItem(patient.getNamePatient() + " " + patient.getLastnamePatient());
+            item.setOnAction(e -> {
+                pacienteSeleccionado = patient;  // Guardamos el paciente seleccionado
+                splitPacientes.setText(patient.getNamePatient() + " " + patient.getLastnamePatient());
+                System.out.println("Paciente seleccionado: " + pacienteSeleccionado.getNamePatient());
+            });
+            splitPacientes.getItems().add(item);
+        }
+    }
+
+    public void addResult() {
+       if (pacienteSeleccionado == null) {
+            mostrarAlerta("Error", "Selecciona un paciente");
+            return;
+        }
+
+        // Verificamos si el paciente existe en la BD
+        Optional<Patient> pacienteEnBD = Optional.ofNullable(patientService.findPatientById(pacienteSeleccionado.getIdPatient()));
+        if (!pacienteEnBD.isPresent()) {
+            mostrarAlerta("Error", "El paciente seleccionado no existe en la base de datos.");
+            return;
+        }
+
+        String descripcion = descriptionField.getText();
+        if (descripcion == null || descripcion.isBlank()) {
+            mostrarAlerta("Error", "Escribe una descripción");
+            return;
+        }
+
+        Result nuevoResultado = new Result();
+        // Usamos el paciente obtenido de la BD para evitar problemas
+        nuevoResultado.setPatient(pacienteEnBD.get());
+        nuevoResultado.setDescription(descripcion);
+
+        resultService.saveResult(nuevoResultado);
+        resultTable.getItems().add(nuevoResultado);
+
+        descriptionField.clear();
+    }
+
+
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
     private void configureColumn() {
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
         namePatient.setCellValueFactory(new PropertyValueFactory<>("namePatient"));
@@ -77,22 +160,6 @@ public class ResultController implements Initializable {
     }
 
 
-    public void addResult() {
-        if (descriptionField.getText().isEmpty() || patientField.getItems().isEmpty()) {
-            setMessage("Error", "You must provide all the data details.");
-            descriptionField.requestFocus();
-            return;
-        }
-
-        var result = new Result();
-        setFormData(result);
-
-        //agragamos utilizando service de spring
-        resultService.saveResult(result);
-        setMessage("Information", "Result added");
-        clearForm();
-        resultList();
-    }
 
     public void ResultForm() {
         //Seleccionamos "SINGLE" para seleccionar un registro a la vez
@@ -111,25 +178,26 @@ public class ResultController implements Initializable {
 
     public void updateResult() {
         if (idResultIntern == null) {
-            setMessage("Information", "You must select a record");
+            setMessage("Information", "Selecciona un registro");
             return;
         }
 
-        if (description.getText() == null || patientField.getItems().isEmpty()) {
-            setMessage("Error", "You must provide data");
+        if (descriptionField.getText().isEmpty() || pacienteSeleccionado == null) {
+            setMessage("Error", "Debes proporcionar datos");
             descriptionField.requestFocus();
             return;
         }
 
-        var result = resultTable.getSelectionModel().getSelectedItem();
-        setFormData(result);
+        Result result = resultTable.getSelectionModel().getSelectedItem();
+        result.setDescription(descriptionField.getText());
+        result.setPatient(pacienteSeleccionado);
+
         resultService.saveResult(result);
 
-        setMessage("Information", "Data modify");
+        setMessage("Information", "Datos modificados");
         clearForm();
         resultList();
     }
-
     public void removeResult() {
         if (idResultIntern == null) {
             setMessage("Information", "You must select a record");
@@ -156,4 +224,5 @@ public class ResultController implements Initializable {
         //con esto esperamos a que el usuario muestre el mensaje
         alert.showAndWait();
     }
+
 }
